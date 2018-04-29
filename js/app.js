@@ -84,16 +84,18 @@
           Services: session.Services.map(e => servicesResult.find(serv => serv.Id === parseInt(e)).ServiceId),
           StartTime: `${session.StartTime}:00`,
           PlaceCount: creationsResult.find(creation => creation.Id === session.CreationId).PlaceCount,
-          MinDate: session.MinDate,
-          MaxDate: session.MaxDate,
+          MinDate: `${new Date(session.MinDate).toJSON().slice(0, -1)}+03:00`,
+          MaxDate: `${new Date(session.MaxDate).toJSON().slice(0, -1)}+03:00`,
           DaysOfWeek: session.DaysOfWeek.map(e => parseInt(e))
         }
       }),
+      sessionExcludeRules: [],
+      DiscountCode: 'mir'
     }
 
     servicesResult.map(service => { delete service.Id; service.Discount ? delete service.Discount.Id : false; return service });
 
-    document.getElementById('result').value = JSON.stringify(result, null, 2);
+    document.getElementById('result').value = JSON.stringify(result, null, 4);
     
   }
 
