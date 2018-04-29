@@ -23,7 +23,7 @@
   placeListElement.lastElementChild.onclick = () => placeList.push(createPlace());
   creationListElement.lastElementChild.onclick = () => creationList.push(createCreation());
   sessionListElement.lastElementChild.onclick = () => sessionList.push(createSession());
-  document.getElementById('result').firstElementChild.onclick = generate;
+  document.getElementById('resultArea').firstElementChild.onclick = generate;
 
   serviceList.push(createService());
   placeList.push(createPlace());
@@ -37,24 +37,102 @@
 
       if (elem.discount.value) {
         const disElem = servicesElement.querySelector(`div[id='${elem.discount.value}']`).getElementsByTagName('input');
-        discount = createObj(disElem);
+        discount = createServiceObj(disElem);
       }
 
-      resultElem = createObj(elem);
+      let resultElem = createServiceObj(elem);
       resultElem.Discount = discount;
       
       return resultElem;
     });
 
+    const placesResult = placeList.map((place, index) => {
+      const elem = place.getElementsByTagName('input');
+      
+      let resultElem = createPlaceObj(elem);
+      
+      return resultElem;
+    });
+    
+    const creationsResult = creationList.map((creation, index) => {
+      const elem = creation.getElementsByTagName('input');
+
+      let resultElem = createCreationObj(elem);
+      
+      return resultElem;
+    });
+    
+    const sessionsResult = sessionList.map((session, index) => {
+      const elem = session.getElementsByTagName('input');
+  
+      let resultElem = createSessionObj(elem);
+      
+      return resultElem;
+    });
+
+    const result = {
+      ValidatePrices: true,
+      Services: servicesResult,
+      SessionGenerationRules: sessionsResult.map((session, index) => {
+        return {
+          Id: session.Id,
+          Name: session.StartTime,
+          SourcePlaceId: creationsResult.find(creation => creation.Id === session.CreationId).PlaceId,
+          SourcePlaceName: placesResult.find(place => place.Id === creationsResult.find(creation => creation.Id === session.CreationId).PlaceId).Name,
+          SourceCreationId: session.CreationId,
+          SourceCreationName: creationsResult.find(creation => creation.Id === session.CreationId).Name,
+          Services: session.Services.map(e => servicesResult.find(serv => serv.Id === parseInt(e)).ServiceId),
+          StartTime: `${session.StartTime}:00`,
+          PlaceCount: creationsResult.find(creation => creation.Id === session.CreationId).PlaceCount,
+          MinDate: session.MinDate,
+          MaxDate: session.MaxDate,
+          DaysOfWeek: session.DaysOfWeek.map(e => parseInt(e))
+        }
+      }),
+    }
+
+    servicesResult.map(service => { delete service.Id; service.Discount ? delete service.Discount.Id : false; return service });
+
+    document.getElementById('result').value = JSON.stringify(result, null, 2);
     
   }
 
-  function createObj(elem) {
+  function createServiceObj(elem) {
     return {
+      Id: parseInt(elem.id.value),
       ServiceId: parseInt(elem.serviceId.value),
       Price: parseInt(elem.price.value),
       Name: elem.name.value,
       FullName: elem.fullname.value
+    }
+  }
+
+  function createPlaceObj(elem) {
+    return {
+      Id: parseInt(elem.id.value),
+      Name: elem.name.value
+    }
+  }
+
+  function createCreationObj(elem) {
+    return {
+      Id: parseInt(elem.id.value),
+      Name: elem.name.value,
+      PlaceId: parseInt(elem.placeId.value),
+      PlaceCount: parseInt(elem.placeCount.value)
+    }
+  }
+
+  function createSessionObj(elem) {
+    return {
+      Id: parseInt(elem.id.value),
+      Services: elem.serviceIds.value.split(',').map(e => e.trim()),
+      CreationId: parseInt(elem.creationId.value),
+      StartTime: elem.startTime.value,
+      MinDate: elem.minDate.value,
+      MaxDate: elem.maxDate.value,
+      DaysOfWeek: elem.daysOfWeek.value.split(',').map(e => e.trim()),
+      ExceptionDays: elem.exceptionDays.value.split(',').map(e => e.trim())
     }
   }
 
