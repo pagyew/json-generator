@@ -1,1 +1,1 @@
-# json-generator
+# JSON generator

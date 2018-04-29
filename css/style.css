@@ -1,0 +1,13 @@
+.heading, .item {
+  display: grid;
+  grid-template-columns: 50px repeat(auto-fill, 150px);
+  grid-gap: 5px;
+}
+
+.heading span {
+  text-align: center;
+}
+
+.item input {
+  text-align: center;
+}
