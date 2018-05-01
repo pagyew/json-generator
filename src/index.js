@@ -1,3 +1,5 @@
+import './style.css'
+
 ; (function () {
   const serviceList = [],
     placeList = [],
