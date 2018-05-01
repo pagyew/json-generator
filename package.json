@@ -2,5 +2,28 @@
   "name": "json-generator",
   "version": "0.1.0",
   "author": "6ecuw",
+  "homepage": "https://github.com/6ecuw/json-generator#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/6ecuw/json-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/6ecuw/json-generator/issues"
+  },
+  "scripts": {
+    "build": "webpack --config webpack.config.js"
+  },
+  "dependencies": {
+    "minireset.css": "0.0.3"
+  },
+  "devDependencies": {
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.1.2"
+  },
+  "keywords": [
+    "json",
+    "generator",
+    "json-generator"
+  ],
   "license": "ISC"
 }
