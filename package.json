@@ -1,37 +1,30 @@
 {
-  "name": "json-generator",
-  "version": "0.1.0",
-  "author": "6ecuw",
-  "homepage": "https://github.com/6ecuw/json-generator#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/6ecuw/json-generator.git"
-  },
-  "bugs": {
-    "url": "https://github.com/6ecuw/json-generator/issues"
-  },
-  "scripts": {
-    "dev": "webpack-dev-server --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
-  },
-  "dependencies": {
-    "minireset.css": "0.0.3"
-  },
-  "devDependencies": {
-    "css-loader": "^0.28.11",
-    "extract-text-webpack-plugin": "^4.0.0-beta.0",
-    "html-webpack-plugin": "^3.2.0",
-    "style-loader": "^0.21.0",
-    "uglifyjs-webpack-plugin": "^1.2.5",
-    "webpack": "^4.6.0",
-    "webpack-cli": "^2.1.2",
-    "webpack-dev-server": "^3.1.3",
-    "webpack-merge": "^4.1.2"
-  },
-  "keywords": [
-    "json",
-    "generator",
-    "json-generator"
-  ],
-  "license": "ISC"
+	"name": "json-generator",
+	"version": "0.1.0",
+	"author": "6ecuw",
+	"description": "JSON schedule generator for Rambler/Kassa",
+	"homepage": "https://github.com/6ecuw/json-generator#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/6ecuw/json-generator.git"
+	},
+	"bugs": {
+		"url": "https://github.com/6ecuw/json-generator/issues"
+	},
+	"scripts": {
+		"dev": "pingy dev",
+		"build": "pingy export"
+	},
+	"devDependencies": {
+		"node-sass": "^4",
+		"babel-core": "^6",
+		"babel-preset-env": "^1",
+		"@pingy/cli": "^0.12.4"
+	},
+	"keywords": [
+		"json",
+		"generator",
+		"json-generator"
+	],
+	"license": "ISC"
 }

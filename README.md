@@ -1,1 +1,1 @@
-# JSON generator
+# JSON schedule generator for Rambler/Kassa

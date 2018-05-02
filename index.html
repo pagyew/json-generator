@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>JSON Generator</title>
+  <meta charset="utf-8" />
+  <meta name="description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
+</head>
+
+<body>
+  <div id="app">
+    <div id="serviceList" class="list">
+      <div class="title">Services</div>
+      <div class="heading">
+        <span>ID</span>
+        <span>ServiceID</span>
+        <span>Name</span>
+        <span>FullName</span>
+        <span>Price</span>
+        <span>Discount</span>
+      </div>
+      <div id="services" class="items">
+
+      </div>
+      <button type="button">+ Add</button>
+    </div>
+
+    <div id="placeList" class="list">
+      <div class="title">Places</div>
+      <div class="heading">
+        <span>ID</span>
+        <span>Name</span>
+      </div>
+      <div id="places" class="items">
+        
+      </div>
+
+      <button type="button">+ Add</button>
+    </div>
+
+    <div id="creationList" class="list">
+      <div class="title">Creations</div>
+      <div class="heading">
+        <span>ID</span>
+        <span>Name</span>
+        <span>PlaceID</span>
+        <span>PlaceCount</span>
+      </div>
+      <div id="creations" class="items">
+
+      </div>
+
+      <button type="button">+ Add</button>
+    </div>
+
+    <div id="sessionList" class="list">
+      <div class="title">Sessions</div>
+      <div class="heading">
+        <span>ID</span>
+        <span>ServiceIDs</span>
+        <span>CreationID</span>
+        <span>StartTime</span>
+        <span>MinDate</span>
+        <span>MaxDate</span>
+        <span>DaysOfWeek</span>
+        <span>ExceptionDays</span>
+      </div>
+      <div id="sessions" class="items">
+
+      </div>
+
+      <button type="button">+ Add</button>
+    </div>
+    <div id="resultArea">
+      <button type="button">Generate</button>
+      <textarea name="result" id="result" cols="30" rows="10"></textarea>
+    </div>
+  </div>
+  <script type="text/javascript" src="scripts/main.js"></script>
+</body>
+
+</html>
