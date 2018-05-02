@@ -98,6 +98,25 @@ function generate() {
 
 }
 
+function test() {
+  document.querySelector('div#services input[name=serviceId]').value = 123;
+  document.querySelector('div#services input[name=name]').value = '123';
+  document.querySelector('div#services input[name=fullname]').value = '123';
+  document.querySelector('div#services input[name=price]').value = 123;
+  document.querySelector('div#places input[name=name]').value = '123';
+  document.querySelector('div#creations input[name=name]').value = '123';
+  document.querySelector('div#creations input[name=placeId]').value = 1;
+  document.querySelector('div#creations input[name=placeCount]').value = 123;
+  document.querySelector('div#sessions input[name=serviceIds]').value = '1';
+  document.querySelector('div#sessions input[name=creationId]').value = 1;
+  document.querySelector('div#sessions input[name=startTime]').value = '11:00';
+  document.querySelector('div#sessions input[name=minDate]').value = '2018-05-01';
+  document.querySelector('div#sessions input[name=maxDate]').value = '2018-06-01';
+  document.querySelector('div#sessions input[name=daysOfWeek]').value = '1';
+}
+
+test();
+
 function createServiceObj(elem) {
   return {
     Id: parseInt(elem.id.value),
