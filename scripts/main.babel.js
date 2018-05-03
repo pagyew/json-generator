@@ -89,7 +89,7 @@ function generate() {
       }
     }),
     sessionExcludeRules: [],
-    DiscountCode: 'mir'
+    DiscountCode: document.getElementById('discountName').value || undefined
   }
 
   servicesResult.map(service => { delete service.Id; service.Discount ? delete service.Discount.Id : false; return service });
