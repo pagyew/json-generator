@@ -35,7 +35,7 @@ function generate() {
     let discount;
 
     if (elem.discount.value) {
-      const disElem = servicesElement.querySelector(`div[id='${elem.discount.value}']`).getElementsByTagName('input');
+      const disElem = servicesElement.querySelector(`div[serviceId='${elem.discount.value}']`).getElementsByTagName('input');
       discount = createServiceObj(disElem);
     }
 
@@ -80,7 +80,7 @@ function generate() {
         SourcePlaceName: placesResult.find(place => place.Id === creationsResult.find(creation => creation.Id === session.CreationId).PlaceId).Name,
         SourceCreationId: session.CreationId,
         SourceCreationName: creationsResult.find(creation => creation.Id === session.CreationId).Name,
-        Services: session.Services.map(e => servicesResult.find(serv => serv.Id === parseInt(e)).ServiceId),
+        Services: session.Services.map(e => parseInt(e)),
         StartTime: `${session.StartTime}:00`,
         PlaceCount: creationsResult.find(creation => creation.Id === session.CreationId).PlaceCount,
         MinDate: `${new Date(session.MinDate).toJSON().slice(0, -1)}+03:00`,
@@ -92,14 +92,12 @@ function generate() {
     DiscountCode: document.getElementById('discountName').value || undefined
   }
 
-  servicesResult.map(service => { delete service.Id; service.Discount ? delete service.Discount.Id : false; return service });
-
   document.getElementById('result').value = JSON.stringify(result, null, 4);
 
 }
 
 function test() {
-  document.querySelector('div#services input[name=serviceId]').value = 123;
+  document.querySelector('div#services input[name=id]').value = 123;
   document.querySelector('div#services input[name=name]').value = '123';
   document.querySelector('div#services input[name=fullname]').value = '123';
   document.querySelector('div#services input[name=price]').value = 123;
@@ -107,7 +105,7 @@ function test() {
   document.querySelector('div#creations input[name=name]').value = '123';
   document.querySelector('div#creations input[name=placeId]').value = 1;
   document.querySelector('div#creations input[name=placeCount]').value = 123;
-  document.querySelector('div#sessions input[name=serviceIds]').value = '1';
+  document.querySelector('div#sessions input[name=serviceIds]').value = '123';
   document.querySelector('div#sessions input[name=creationId]').value = 1;
   document.querySelector('div#sessions input[name=startTime]').value = '11:00';
   document.querySelector('div#sessions input[name=minDate]').value = '2018-05-01';
@@ -119,8 +117,7 @@ test();
 
 function createServiceObj(elem) {
   return {
-    Id: parseInt(elem.id.value),
-    ServiceId: parseInt(elem.serviceId.value),
+    ServiceId: parseInt(elem.id.value),
     Price: parseInt(elem.price.value),
     Name: elem.name.value,
     FullName: elem.fullname.value
@@ -158,17 +155,14 @@ function createSessionObj(elem) {
 
 function createService() {
   const id = createElement('input', 'number', 'number-field', 'id'),
-    serviceId = createElement('input', 'number', 'number-field', 'serviceId'),
     name = createElement('input', 'text', 'text-field', 'name'),
     fullName = createElement('input', 'text', 'text-field', 'fullname'),
     price = createElement('input', 'number', 'number-field', 'price'),
     discount = createElement('input', 'number', 'number-filed', 'discount'),
     remove = createElement('button', 'button', 'btn', 'button'),
-    service = [id, serviceId, name, fullName, price, discount, remove],
+    service = [id, name, fullName, price, discount, remove],
     serviceItem = document.createElement('div');
 
-  id.value = ++servicesIdCount;
-  id.readOnly = true;
   serviceItem.id = id.value;
   serviceItem.classList.add('item');
 
