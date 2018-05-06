@@ -35,8 +35,11 @@ function generate() {
     let discount;
 
     if (elem.discount.value) {
-      const disElem = servicesElement.querySelector(`div[serviceId='${elem.discount.value}']`).getElementsByTagName('input');
-      discount = createServiceObj(disElem);
+      let disElem;
+      [].forEach.call(servicesElement.querySelectorAll(`input[name='id']`), e => {
+        e.value == elem.discount.value ? disElem = e : false;
+      });
+      discount = createServiceObj(disElem.parentElement.getElementsByTagName('input'));
     }
 
     let resultElem = createServiceObj(elem);
@@ -69,6 +72,14 @@ function generate() {
     return resultElem;
   });
 
+  const excludeResult = sessionList.reduce((prev, session) => {
+    const elem = session.getElementsByTagName('input');
+    elem.exceptionDays.value.split(',').forEach(day => {
+      prev.push(createExcludeObj(elem.id.value, day.trim()));
+    });
+    return prev;
+  }, []);
+
   const result = {
     ValidatePrices: true,
     Services: servicesResult,
@@ -88,7 +99,7 @@ function generate() {
         DaysOfWeek: session.DaysOfWeek.map(e => parseInt(e))
       }
     }),
-    sessionExcludeRules: [],
+    sessionExcludeRules: excludeResult,
     DiscountCode: document.getElementById('discountName').value || undefined
   }
 
@@ -111,6 +122,7 @@ function test() {
   document.querySelector('div#sessions input[name=minDate]').value = '2018-05-01';
   document.querySelector('div#sessions input[name=maxDate]').value = '2018-06-01';
   document.querySelector('div#sessions input[name=daysOfWeek]').value = '1';
+  document.querySelector('div#sessions input[name=exceptionDays]').value = '2018-05-15';
 }
 
 test();
@@ -153,6 +165,15 @@ function createSessionObj(elem) {
   }
 }
 
+function createExcludeObj(id, day) {
+  return {
+    RuleId: parseInt(id),
+    DeleteSessions: true,
+    ExcludeStartTime: new Date(day).toJSON().slice(0, -5),
+    ExcludeEndTime: new Date(day).toJSON().slice(0, -5)
+  }
+}
+
 function createService() {
   const id = createElement('input', 'number', 'number-field', 'id'),
     name = createElement('input', 'text', 'text-field', 'name'),
@@ -163,7 +184,6 @@ function createService() {
     service = [id, name, fullName, price, discount, remove],
     serviceItem = document.createElement('div');
 
-  serviceItem.id = id.value;
   serviceItem.classList.add('item');
 
   service.forEach(e => {
